@@ -38,7 +38,7 @@
                                         <p>category : {{ (is_object($product->category)) ? $product->category->name:''}}</p>
                                         <p>Price :{{$currency_code}} {{$product->price}}</p>
 
-                                     {!! (count( $product->images ) > 0) ?'<img    alt=""   class="img-thumbnail card-img" src="'.('images/'.$product->images[0]->url )  .'">':''!!}
+                                     {!! (count( $product->images ) > 0) ?'<img    alt=""   class="img-thumbnail card-img" src="'.($product->images[0]->url )  .'">':''!!}
 
                                         @if($product->options > 0 ? $product->options:'' )
 

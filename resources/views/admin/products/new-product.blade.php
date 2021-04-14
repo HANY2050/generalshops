@@ -214,7 +214,7 @@
 
                                                     @if( !is_null($product)  && ! is_null($product->images) && count($product->images)>0)
                                                         @if( isset($product->images[$i]) && ! is_null($product->images[$i] &&  !empty($product->images[$i])))
-                                                            <img id="{{'iimage-'.$i}}" src="{{ asset('images/'.$product->images[$i]->url) }}" class="card-img-top" >
+                                                            <img id="{{'iimage-'.$i}}" src="{{ asset($product->images[$i]->url) }}" class="card-img-top" >
 
                                                         @endif
 

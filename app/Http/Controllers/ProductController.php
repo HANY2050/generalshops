@@ -136,7 +136,7 @@ class ProductController extends Controller
 
             foreach ($images as $image){
                 $imageName =time().'.'.$image->extension();
-                 $image->move(public_path('images'),$imageName);
+                 $image->move(public_path(),$imageName);
                 $image = new Image();
                 $image->url=$imageName ;
                 $image->product_id = $product->id;
