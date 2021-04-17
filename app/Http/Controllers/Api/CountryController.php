@@ -21,7 +21,7 @@ class CountryController extends Controller
 
     public function showState($id){
  $country = Country::find($id);
-  return StateResource::collection($country->states);
+  return StateResource::collection($country->states()->paginate());
 
     }
   public function showCities($id){
