@@ -50,10 +50,14 @@ class AuthController extends Controller
             return new UserApiResource($user);
 
         }
-             return [
-                'error' => true,
-                 'massage' => 'فشل في تسجيل الدخول'
 
-             ];
+       $massage = [
+           'error' => true,
+           'massage' => 'فشل في تسجيل الدخول'
+
+       ];
+
+        return response($massage , 404);
+
    }
 }
