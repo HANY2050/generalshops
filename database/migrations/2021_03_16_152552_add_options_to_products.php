@@ -26,6 +26,6 @@ class AddOptionsToProducts extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('optionst');         });
+            $table->dropColumn('options');         });
     }
 }

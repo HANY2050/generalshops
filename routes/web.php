@@ -110,6 +110,9 @@ Route::group(['auth'=>'user_is_admin'], function(){
     Route::get('search-categories', [CategoryController::class, 'search'])->name('search-categories');
     Route::put('categories', [CategoryController::class, 'update']);
     Route::delete('categories', [CategoryController::class, 'delete']);
+    Route::get('edit-image/{id}', [CategoryController::class, 'editImage'])->name('edit-image');;
+    Route::post('updateImage', [CategoryController::class, 'updateImage'])->name('image.update');
+
 
 
 
@@ -125,7 +128,7 @@ Route::group(['auth'=>'user_is_admin'], function(){
     Route::get('products', [ProductController::class, 'index'])->name('products')->middleware(['auth','user_is_admin']);
     Route::post('new-product', [ProductController::class, 'store']);
     Route::get('new-product',[ProductController::class ,'newProduct'])->name('new-product');
-    Route::put('update-product', [ProductController::class, 'update'])->name('update-product');;
+    Route::put('update-product', [ProductController::class, 'update'])->name('update-product');
 
     Route::get('update-product/{id?}',[ProductController::class ,'newProduct'])->name('update-product-form');
     Route::delete('new-product/{id}', [ProductController::class, 'delete']);

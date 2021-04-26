@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 
 
@@ -28,7 +27,7 @@
                             </div>
                         @endif
 
-                        <form action="{{route('categories')}}" method="post" class="row">
+                        <form action="{{route('categories')}}" method="post" class="row" enctype="multipart/form-data"  >
 
                             @csrf
 
@@ -38,11 +37,19 @@
                             </div>
 
 
+                            <div class="form-group col-md-6 ">
+                                <label for="tag_name" >اختار صورة</label>
+                                <input type="file" class="form-control" name="category_image" id="category_image"  onchange="previewFile(this)"   required />
+                                <img  id="previewImg" alt="profile image" style="max-width: 130px; margin-top:20px; " />
+                            </div>
+
+
 
                             <div class="form-group col-md-12">
                                 <button type="submit" class="btn btn-primary btn2 " >ادخال البيانات</button>
                             </div>
                         </form>
+
 
 
 
@@ -73,9 +80,16 @@
 
                                         <span> <a class="edit-All" data-categoryname="{{$category->name}}"
 
-                                                  data-categorygid="{{$category->id}}"> <i class="fas fa-edit"></i> </a>  </span>
+                                                  data-categorygid="{{$category->id}}"
+                                                   > <i class="fas fa-edit"></i> </a>  </span>
 
+                                        <th>
 
+                                            <a href="edit-image/{{$category->id}}" class="btn btn-info"><i class="fas fa-images"></i></a>
+
+                                        </th>
+
+                                         <img    alt=""   class="img-thumbnail card-img" src={{$category->image}}>
 
                                         <p>{{$category->name}}</p>
 
@@ -120,20 +134,28 @@
                     <span> <a  href=""  class="edit-close"  >  <i class="fas fa-window-close"></i> </a>  </span>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route('categories')}}" method="post" class="row">
+                    <form action="{{route('categories')}}" method="post" class="row"  enctype="multipart/form-data" >
 
                         @csrf
 
                         <div class="form-group col-md-6 ">
                             <label for="category_name" >Category Name</label>
-                            <input type="text" class="form-control" name="category_name" id="edit_category_name" placeholder="Category Name " required >
+                            <input type="text" class="form-control " name="category_name" id="edit_category_name" placeholder="Category Name " required >
                         </div>
+
+
+
+
+
+
+
 
                         <input type="hidden" class="form-control" name="category_id" id="edit_category_id"  required >
                         <input type="hidden" name="_method"  value="put" />
                         <div class="form-group col-md-12">
                             <button type="submit" class="btn btn-primary btn2 " >تحديث البيانات </button>
                         </div>
+
                     </form>
 
 
@@ -142,7 +164,23 @@
             </div>
         </div>
     </div>
+    <script>
 
+        function myFunction(){
+            var fileName=$("input[type=file]").get(0).files[0];
+            if(fileName){
+                var reader = new  FileReader();
+                reader.onload = function (){
+                    $('#EditPreviewImg').attr("src",reader.result);
+
+
+                }
+               reader.readAsDataURL(fileName);
+
+            }
+        }
+
+    </script>
 
     <script type="text/javascript">
         $('.delete-btn').click(function(e) {
@@ -157,16 +195,18 @@
             var $Edit = $('.edit-All');
             var $Window = $('#edit');
             var $edit_category_name =$('#edit_category_name');
-
+            //var $edit_category_image =$('#edit_category_image');
             var $edit_category_id =$('#edit_category_id');
             $Edit.on('click', function (element) {
                 element.preventDefault();
                 var categoryName = $(this).data('categoryname');
+               // var categoryImage = $(this).data('categoryimage');
 
                 var categoryId = $(this).data('categorygid');
                 $Window.modal('show');
 
                 $edit_category_name.val(categoryName);
+             //  $edit_category_image.val(categoryImage);
 
                 $edit_category_id.val(categoryId);
 
@@ -176,11 +216,39 @@
         });
 
 
+
+
     </script>
 
 
 
+<script>
 
+    function previewFile(){
+        var file=$("input[type=file]").get(0).files[0];
+        if(file){
+         var reader = new  FileReader();
+         reader.onload = function (){
+           $('#previewImg').attr("src",reader.result);
+
+
+         }
+            return  reader.readAsDataURL(file);
+
+        }
+    }
+
+
+
+
+
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
 
 
 @endsection

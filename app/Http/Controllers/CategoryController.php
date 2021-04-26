@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -22,9 +23,11 @@ class CategoryController extends Controller
 
     public function store(Request $request){
 
+
         $request->validate([
 
-            'category_name' => 'required'
+            'category_name' => 'required',
+
 
         ]);
         $categoryName = $request->input('category_name');
@@ -36,10 +39,16 @@ class CategoryController extends Controller
 
         }
 
-        $newTag = new Category();
-        $newTag ->name = $categoryName;
+        $newCategory = new Category();
 
-        $newTag ->save();
+        $images = $request->file('category_image');
+        $imageName =time().'.'.$images->extension();
+        $images->move(public_path(),$imageName);
+        $newCategory ->name = $categoryName;
+        $newCategory->image=$imageName ;
+
+
+        $newCategory ->save();
 
         return redirect()->back()->with('success',' بنجاح  (   '. $categoryName .'   )تم ادخال ' );
 
@@ -89,6 +98,8 @@ class CategoryController extends Controller
             'category_id'=>'required',
 
         ]);
+        $request->hasFile('edit_category_image');
+
 
 
         $categoryName= $request->input('category_name');
@@ -102,7 +113,6 @@ class CategoryController extends Controller
 
         $categoryID= intval($request->input('category_id'));
         $category = Category::find($categoryID);
-
         $category->name = $request->input('category_name');
         $category->save();
         return redirect()->back()->with('success','تم التعديل بنجاح' );
@@ -118,11 +128,30 @@ class CategoryController extends Controller
 
     }
 
+public  function  editImage($id){
+
+$image = Category::find($id);
+return view('admin/categories/edit-image',compact('image'));
+
+
+}
 
 
 
 
+    public function updateImage (Request $request){
 
+        $image = $request->file('category_image');
+        $imageName =time().'.'.$image->extension();
+        $image->move(public_path(),$imageName);
+
+        $image= Category::find($request->id);
+
+        $image->image=$imageName;
+        $image->save();
+        return redirect()->back()->with('success','تم التعديل بنجاح' );
+
+    }
 
 
 }
