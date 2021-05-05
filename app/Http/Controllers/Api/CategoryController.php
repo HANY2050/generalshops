@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use mysql_xdevapi\Collection;
 
@@ -24,4 +25,13 @@ class CategoryController extends Controller
 
 
     }
+    public function  products($id){
+       $category = Category::find($id);
+       return ProductResource::collection($category->products()->paginate());
+
+
+    }
+
+
+
 }

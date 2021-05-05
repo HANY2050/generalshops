@@ -21,28 +21,24 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-
+//categories
 Route::get('categories', [CategoryController::class, 'index']);
 Route::get('categories/{id}', [CategoryController::class, 'show']);
+Route::get('categories/{id}/products', [CategoryController::class, 'products']);
+//tags
 Route::get('tags', [TagController::class, 'index']);
 Route::get('tags/{id}', [TagController::class, 'show']);
-
+//products
 Route::get('products', [ProductContoller::class, 'index']);
 Route::get('products/{id}', [ProductContoller::class, 'show']);
 
-
+//countries
 Route::get('countries', [CountryController::class, 'index']);
 Route::get('countries/{id}/states', [CountryController::class, 'showState']);
 Route::get('countries/{id}/cities', [CountryController::class, 'showCities']);
 
-Route::get('users', function (){
 
-return UserFullResource::collection(User::paginate());
-
-});
-
-
+//login and register
 Route::post('auth/register', [AuthController::class, 'register'] );
 Route::post('auth/login', [AuthController::class, 'login'] );
 
@@ -50,6 +46,11 @@ Route::post('auth/login', [AuthController::class, 'login'] );
 
 //Route::get('categories','Api/CategoryController@index');
 
+Route::get('users', function (){
+
+    return UserFullResource::collection(User::paginate());
+
+});
 
 
 
