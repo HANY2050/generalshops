@@ -30,7 +30,9 @@ class User extends Authenticatable
         'shipping_address',
         'billing_address',
         'email_verified_at',
-               'api_token '
+               'api_token ',
+        'cart_id
+        '
     ];
 
     public function orders(){
@@ -85,6 +87,12 @@ return $this->hasMany(Order::class);
     public function formattedName(){
 
         return $this->first_name .''. $this->last_name;
+
+    }
+
+    public function cart(){
+
+       return $this->hasOne(Cart::class);
 
     }
 

@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->boolean('email_verified')->default(false);
             $table->string('mobile')->unique();
             $table->boolean('mobile_verified')->default(false);
+            $table->unsignedBigInteger('cart_id')->nullable();
             $table->string('password');
             $table->bigInteger('shipping_address')->nullable();
             $table->bigInteger('billing_address')->nullable();

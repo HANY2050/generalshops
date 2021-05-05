@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\ProductContoller;
@@ -58,7 +59,13 @@ Route::get('users', function (){
 
 Route::group(['auth:api'],function (){
 
+    Route::post('carts', [CartController::class, 'addProductToCart']);
 
+
+
+});
+
+Route::middleware('auth:api')->group(function (){
 
 
 });
