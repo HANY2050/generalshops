@@ -31,8 +31,7 @@ class User extends Authenticatable
         'billing_address',
         'email_verified_at',
                'api_token ',
-        'cart_id
-        '
+       'cart_id',
     ];
 
     public function orders(){
