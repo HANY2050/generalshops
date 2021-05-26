@@ -24,7 +24,7 @@ class CartController extends Controller
             $product = Product::find(intval($cartItem->product->id));
             $finalCartItem= new \stdClass();
             $finalCartItem->product = new ProductResource($product);
-            $finalCartItem->qty = $cartItem->qty;
+            $finalCartItem->qty = doubleval($cartItem->qty);
             array_push($finalCartItems  , $finalCartItem );
 
         }
