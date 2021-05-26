@@ -17,6 +17,8 @@ class CreateCartsTable extends Migration
             $table->bigIncrements('id');
             $table->text('cart_items');
             $table->double('total');
+            $table->unsignedBigInteger('user_id');
+
             $table->timestamps();
         });
     }

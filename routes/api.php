@@ -59,7 +59,7 @@ Route::get('users', function (){
 
 Route::group(['auth:api'],function (){
 
-    Route::post('carts', [CartController::class, 'addProductToCart']);
+
 
 
 
@@ -67,7 +67,8 @@ Route::group(['auth:api'],function (){
 
 Route::middleware('auth:api')->group(function (){
 
-
+    Route::post('carts', [CartController::class, 'addProductToCart']);
+   Route::get('carts', [CartController::class, 'index']);
 });
 //Route::middleware('auth:api')->get('/products', function (Request $request) {
   //  return Product::all();
