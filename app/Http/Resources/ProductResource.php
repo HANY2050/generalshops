@@ -18,7 +18,7 @@ class ProductResource extends JsonResource
    'product_id'  => $this->id,
      'product_title' =>$this->title,
             'product_description' =>$this->description,
-            'product_price' =>$this->price,
+            'product_price' =>number_format($this->price , 3),
             'product_unit' => new UnitResource($this->hasUnit),
             'product_total' =>number_format($this->total , 2),
             'product_discount'=>number_format($this->discount , 2),
