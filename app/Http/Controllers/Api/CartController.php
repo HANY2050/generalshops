@@ -13,7 +13,47 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
+
 {
+
+
+public function removeProductFromCart($id){
+    $product = Product::find($id);
+    $user = Auth::user();
+
+
+
+
+
+    /**
+     * @var Cart
+     */
+
+    $cart =$user->cart;
+    if(is_null($cart)){
+        $cart = new Cart();
+        $cart->user_id = $user->id;
+        $cart->cart_items = [];
+        $cart->total = 0;
+
+    }
+
+    if($cart->inItems($id)){
+
+        $cart->decreaseProduct($product);
+    }
+    /*return $cart;*/
+    $cart->save();
+
+    $user->cart_id = $cart->id;
+    $user->save();
+    return $cart;
+
+
+
+
+}
+
     public function index(){
 
         $user = Auth::user();
@@ -74,7 +114,7 @@ class CartController extends Controller
 
  if($cart->inItems($product_id)){
 
-$cart->increasezProductsInCart($product);
+$cart->increasezProductsInCart($product,$qty);
  }else{
 
  $cart->addProductsInCart($product,$qty);

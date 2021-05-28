@@ -68,6 +68,38 @@ return json_decode($this->cart_items);
     }
 
 
+    public function decreaseProduct(Product $product){
+
+        $cartItems = $this->cart_items;
+        if(is_null($cartItems)){
+            $cartItems=[];
+        }else{
+            if(!is_array($cartItems)){
+
+                $cartItems = json_decode($this->cart_items);
+            }
+        }
+
+        /**
+         * @var $cartItem CartItem
+         */
+
+        foreach ($cartItems as $cartItem){
+            if($cartItem->product->id === $product->id){
+                $cartItem->qty --;
+            }
+        }
+        $this->cart_items = json_encode($cartItems);
+        $tempTotal = 0;
+        foreach ($cartItems as $cartItem){
+            $tempTotal += ($cartItem->qty * $cartItem->product->price);
+        }
+        $this->total = $tempTotal;
+    }
+
+
+
+
 
     public function addProductsInCart(Product $product , $qty = 1){
         $cartItems = $this->cart_items;
