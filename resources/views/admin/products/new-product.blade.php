@@ -245,7 +245,6 @@
 
 
 
-
                                                     </div>
                                                 </a>
                                                 <input   name="product_images[]"  type="file"  class="form-control-file image-file-upload " id="image-{{ $i }}"  >
