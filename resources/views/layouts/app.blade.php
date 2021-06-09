@@ -55,21 +55,29 @@
 
                         @if (Route::has('register'))
                             <li class="nav-item">
+
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @endif
                     @else
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
+                                {{ Auth::user()->first_name }}
                             </a>
 
 
-
+                            @can('isAdmin')
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                                <a class="dropdown-item" href="{{ route('products') }}">
+
+
+                            <a class="dropdown-item" href="{{ route('products') }}">
                                     {{ __('products') }}
+                                </a>
+
+                                <a class="dropdown-item" href="{{ route('ShopAdmin') }}">
+                                    {{ __('عرض المتاجر') }}
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('reviews') }}">
@@ -122,6 +130,46 @@
                                     @csrf
                                 </form>
                             </div>
+                            @endcan
+
+                            @can('isSupport')
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+
+                                <a class="dropdown-item" href="{{ route('Shop') }}">
+                                    {{ __('اضافة بيانات المتجر') }}
+                                </a>
+
+
+
+
+                                <a class="dropdown-item" href="{{ route('Shop_Cart') }}">
+                                    {{ __('اضافة صور تراخيص المحل') }}
+                                </a>
+
+                                <a class="dropdown-item" href="{{ route('productsShop') }}">
+                                    {{ __('اضافة المنتجات وادارتهاء') }}
+                                </a>
+
+
+
+
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    {{ __('تسجيل الخروج') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                            @endcan
+
+
+
+
+
                         </li>
                     @endguest
                 </ul>
