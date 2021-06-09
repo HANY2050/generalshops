@@ -7,16 +7,21 @@ use App\Models\Image;
 use App\Models\Product;
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-
-
-class ProductController extends Controller
+class ProductShopController extends Controller
 {
     public function index(){
 
+  //print($user);
         $products =Product::with(['category','images'])-> paginate(env('PAGINATION_COUNT'));
-         $currencyCode = env("CURRENCY_CODE","RY");
-        return view('admin.products.products')->with([
+        $user = Auth::user()->id;
+
+        $currencyCode = env("CURRENCY_CODE","RY");
+        return view('admin.productShop.productsShop')->with([
+
+
+          'user'=>$user,
             'products'=> $products,
             'currency_code'=> $currencyCode,
         ]);
@@ -27,17 +32,17 @@ class ProductController extends Controller
     public function newProduct ($id = null){
 
         $product = null;
-         if(! is_null($id)){
+        if(! is_null($id)){
 
-        $product =Product::with([
-           'hasUnit','category', 'images'
-        ])-> find($id);
+            $product =Product::with([
+                'hasUnit','category', 'images'
+            ])-> find($id);
 
-             }
+        }
 
-         $unit = Unit::all();
-         $categories = Category::all();
-        return view('admin.products.new-product')->with([
+        $unit = Unit::all();
+        $categories = Category::all();
+        return view('admin.productShop.new-productShop')->with([
 
             'product'=> $product,
             'unit'=> $unit,
@@ -62,15 +67,15 @@ class ProductController extends Controller
             'product_price'=>'required' ,
             'product_category'=>'required' ,
             'product_discount'=>'required' ,
-          'options'=>'required' ,
+            'options'=>'required' ,
             'product_total'=>'required'
         ]);
 
 
-  $product = new Product();
+        $product = new Product();
 
- $this->writeProduct($request,$product);
-        return redirect(route('products'))->with('success','تم الادخال بنجاح' );
+        $this->writeProduct($request,$product);
+        return redirect(route('productsShop'))->with('success','تم الادخال بنجاح' );
 
 
 
@@ -119,18 +124,18 @@ class ProductController extends Controller
         if($request->hasFile('product_images') ){
 
             if($update){
-       $images = $product->images;
+                $images = $product->images;
 
-       if(count($images) > 0){
+                if(count($images) > 0){
 
-    foreach ($images as $image ){
+                    foreach ($images as $image ){
 
-        Image::destroy($image->id);
+                        Image::destroy($image->id);
 
-    }
+                    }
 
 
-       }
+                }
 
 
             }
@@ -139,7 +144,7 @@ class ProductController extends Controller
 
             foreach ($images as $image){
                 $imageName =time().'.'.$image->extension();
-                 $image->move(public_path(),$imageName);
+                $image->move(public_path(),$imageName);
                 $image = new Image();
                 $image->url=$imageName ;
                 $image->product_id = $product->id;
@@ -152,7 +157,7 @@ class ProductController extends Controller
 
         }
 
-return $product;
+        return $product;
 
     }
 
@@ -173,7 +178,7 @@ return $product;
         $productID= $request->input('product_id');
         $product=Product::find($productID);
         $this->writeProduct($request,$product , true);
-        return redirect(route('products'))->with('success','تم التعديل بنجاح' );
+        return redirect(route('productsShop'))->with('success','تم التعديل بنجاح' );
 
 
     }
@@ -191,16 +196,13 @@ return $product;
 
 
     }
-         public function deleteOption(Request $request){
+    public function deleteOption(Request $request){
 
-             $options = $request->input('options');
-             Product::destroy($options);
-             return redirect()->back()->with('success','تم حذف البيانات بنجاح' );
-
-
-         }
+        $options = $request->input('options');
+        Product::destroy($options);
+        return redirect()->back()->with('success','تم حذف البيانات بنجاح' );
 
 
-
+    }
 
 }

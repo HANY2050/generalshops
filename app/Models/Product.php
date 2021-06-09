@@ -21,6 +21,7 @@ class Product extends Model
         'total',
         'options',
         'discount',
+        'user_id',
     ];
     public function images(){
 

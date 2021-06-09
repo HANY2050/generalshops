@@ -42,7 +42,7 @@
 
 
 
-                        <form  action="{{ (!is_null($product)) ? route('update-product') : route('new-product') }}" method="post"  class="row" enctype="multipart/form-data">
+                        <form  action="{{ (!is_null($product)) ? route('update-productShop') : route('new-productShop') }}" method="post"  class="row" enctype="multipart/form-data">
 
                             @csrf
                             @if(! is_null($product))
@@ -56,11 +56,10 @@
 
 
 
-  <div class="form-group col-md-12 ">
+                          {{--  <div class="form-group col-md-12 ">
 
                             <input type="hidden" class="form-control" name="user_id" id="user_id" placeholder="User Id " required>
-                    </div>
-
+                    </div>--}}
 
                             <div class="form-group col-md-12 ">
 
